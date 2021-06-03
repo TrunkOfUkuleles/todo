@@ -1,20 +1,46 @@
 import React from "react";
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import Badge from 'react-bootstrap/Badge';
 
-// import ListGroup from 'react-bootstrap/ListGroup'
+import './todo.scss';
+
 
 const List = (props) => {
   return (
-    <ul>
+    <>
       {props.list.map((item) => (
-        <li className={`complete-${item.complete.toString()}`} key={item._id}>
-          <span onClick={() => props.handleComplete(item._id)}>
-            {item.text}
-          </span>
-        </li>
+        <Card className={`complete-${item.complete}`} key={item._id}>
+          {/* <Card.Header > 
+            
+          </Card.Header> */}
+  
+ <Card.Body onClick={() => props.handleComplete(item._id)}>
+
+    <Card.Title>{item.complete ? <Badge  bg="success">Completed</Badge>  : <Badge  as="div" bg='danger'>Pending</Badge> } {item.assignee}</Card.Title>
+
+    <Card.Text>
+    {item.text}
+    </Card.Text>
+    {/* <Button variant="primary"  >done</Button> */}
+  </Card.Body>
+  <Button style={{"text-align": "right", "min-width":"33%"}} onClick={() => props.handleDelete(item._id)}>Done</Button>
+  <Card.Footer className="text-muted" style={{"text-align": "right"  }}>Difficulty: {item.difficulty}</Card.Footer>
+</Card>
       ))}
-    </ul>
+    </>
   );
 };
 
 
+
+
+
 export default List;
+
+
+{/* <li className={`complete-${item.complete.toString()}`} key={item._id}>
+          <span onClick={() => props.handleComplete(item._id)}>
+            {item.text}
+          </span>
+        </li> */}

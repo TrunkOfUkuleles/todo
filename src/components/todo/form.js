@@ -34,7 +34,7 @@ const handleInputChange = e => {
             />
           </Form.Group>
           <Form.Group controlId="difficulty">
-            <Form.Label>Difficulty Rating</Form.Label>
+            <Form.Label for="difficulty">Difficulty Rating</Form.Label>
             {/* <Form.Range /> */}
             <Form.Control defaultValue="1" type="range" min="1" max="5" name="difficulty" onChange={(e) => handleInputChange(e)} />
           </Form.Group>

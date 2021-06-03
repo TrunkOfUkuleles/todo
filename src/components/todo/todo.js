@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TodoForm from "./form.js";
 import TodoList from "./list.js";
-
+import "./_reset.scss";
 import "./todo.scss";
 
 const ToDo = () => {
@@ -72,7 +72,7 @@ const ToDo = () => {
 
   return (
     <>
-      <header>
+      <header bg="primary">
         <h2>
           To Do List Manager({list.filter((item) => !item.complete).length})
           Complete
@@ -85,7 +85,7 @@ const ToDo = () => {
         </div>
 
         <div>
-          <TodoList list={list} handleComplete={toggleComplete} />
+          <TodoList list={list} handleDelete={handleDelete} handleComplete={toggleComplete} />
         </div>
       </section>
     </>

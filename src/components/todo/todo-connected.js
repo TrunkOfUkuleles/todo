@@ -5,6 +5,7 @@ import TodoList from './list.js';
 import './todo.scss';
 
 const todoAPI = 'https://api-js401.herokuapp.com/api/v1/todo';
+// const todoAPI = 'http://localhost:3000/todo'
 
 
 const ToDo = () => {
@@ -12,7 +13,7 @@ const ToDo = () => {
   const [list, setList] = useState([]);
 
   const _addItem = (item) => {
-    item.due = new Date();
+    // item.due = new Date();
     fetch(todoAPI, {
       method: 'post',
       mode: 'cors',
@@ -52,6 +53,65 @@ const ToDo = () => {
     }
   };
 
+  const _deleteTodo = id => {
+
+    let url = `${todoAPI}/${id}`;
+    fetch(url, {
+      method: 'delete',
+      mode: 'cors',
+      cache: 'no-cache',
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(response => response.json())
+      .then(savedItem => {
+        setList(list.filter(listItem => listItem._id === id ? '' : listItem));
+        console.log("deleted")
+      })
+      .catch(console.error);
+  }
+
+  useEffect(() => {
+    let list = [
+      {
+        _id: 1,
+        complete: false,
+        text: "Clean the Kitchen",
+        difficulty: 3,
+        assignee: "Person A",
+      },
+      {
+        _id: 2,
+        complete: false,
+        text: "Do the Laundry",
+        difficulty: 2,
+        assignee: "Person A",
+      },
+      {
+        _id: 3,
+        complete: false,
+        text: "Walk the Dog",
+        difficulty: 4,
+        assignee: "Person B",
+      },
+      {
+        _id: 4,
+        complete: true,
+        text: "Do Homework",
+        difficulty: 3,
+        assignee: "Person C",
+      },
+      {
+        _id: 5,
+        complete: false,
+        text: "Take a Nap",
+        difficulty: 1,
+        assignee: "Person B",
+      },
+    ];
+
+    list.forEach(el => _addItem(el));
+  }, []);
+
   const _getTodoItems = () => {
     fetch(todoAPI, {
       method: 'get',
@@ -64,25 +124,23 @@ const ToDo = () => {
 
   useEffect(_getTodoItems, []);
 
+
+
   return (
     <>
-      <header>
-        <h2>
-          There are {list.filter(item => !item.complete).length} Items To Complete
-        </h2>
+     <header className="todo-title">
+        <h1>
+          To Do List Manager ({list.filter((item) => !item.complete).length})
+        </h1>
       </header>
 
       <section className="todo">
-
         <div>
           <TodoForm handleSubmit={_addItem} />
         </div>
 
         <div>
-          <TodoList
-            list={list}
-            handleComplete={_toggleComplete}
-          />
+          <TodoList list={list} handleDelete={_deleteTodo} handleComplete={_toggleComplete} />
         </div>
       </section>
     </>
@@ -90,3 +148,25 @@ const ToDo = () => {
 };
 
 export default ToDo;
+
+
+// <header>
+//         <h2>
+//           There are {list.filter(item => !item.complete).length} Items To Complete
+//         </h2>
+//       </header>
+
+//       <section className="todo">
+
+//         <div>
+//           <TodoForm handleSubmit={_addItem} />
+//         </div>
+
+//         <div>
+//           <TodoList
+//             list={list}
+//             handleComplete={_toggleComplete}
+//             handleDelete={_deleteTodo}
+//           />
+//         </div>
+//       </section>
