@@ -7,7 +7,7 @@ import useForm from '../../hooks/form.js'
 const Former = (props) => {
   const todoAPI = 'https://api-js401.herokuapp.com/api/v1/todo';
 const [item, setItem] = useState({})
-const [  handleChange] = useForm(setting)
+const [  handleChange, value] = useForm(setting)
 // const [adding] = useAjax(todoAPI)
 // const handleInputChange = e => {
 //     setItem( {...item, [e.target.name]: e.target.value });
