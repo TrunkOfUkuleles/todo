@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import TodoForm from './form.js';
 import TodoList from './list.js';
-
 import './todo.scss';
 
 const todoAPI = 'https://api-js401.herokuapp.com/api/v1/todo';
@@ -12,8 +11,10 @@ const ToDo = () => {
 
   const [list, setList] = useState([]);
 
-  const _addItem = (item) => {
-    // item.due = new Date();
+  
+
+  const _addItem = (item) => { 
+    item.due = new Date();
     fetch(todoAPI, {
       method: 'post',
       mode: 'cors',
@@ -70,47 +71,47 @@ const ToDo = () => {
       .catch(console.error);
   }
 
-  useEffect(() => {
-    let list = [
-      {
-        _id: 1,
-        complete: false,
-        text: "Clean the Kitchen",
-        difficulty: 3,
-        assignee: "Person A",
-      },
-      {
-        _id: 2,
-        complete: false,
-        text: "Do the Laundry",
-        difficulty: 2,
-        assignee: "Person A",
-      },
-      {
-        _id: 3,
-        complete: false,
-        text: "Walk the Dog",
-        difficulty: 4,
-        assignee: "Person B",
-      },
-      {
-        _id: 4,
-        complete: true,
-        text: "Do Homework",
-        difficulty: 3,
-        assignee: "Person C",
-      },
-      {
-        _id: 5,
-        complete: false,
-        text: "Take a Nap",
-        difficulty: 1,
-        assignee: "Person B",
-      },
-    ];
+  // useEffect(() => {
+  //   let list = [
+  //     {
+  //       _id: 1,
+  //       complete: false,
+  //       text: "Clean the Kitchen",
+  //       difficulty: 3,
+  //       assignee: "Person A",
+  //     },
+  //     {
+  //       _id: 2,
+  //       complete: false,
+  //       text: "Do the Laundry",
+  //       difficulty: 2,
+  //       assignee: "Person A",
+  //     },
+  //     {
+  //       _id: 3,
+  //       complete: false,
+  //       text: "Walk the Dog",
+  //       difficulty: 4,
+  //       assignee: "Person B",
+  //     },
+  //     {
+  //       _id: 4,
+  //       complete: true,
+  //       text: "Do Homework",
+  //       difficulty: 3,
+  //       assignee: "Person C",
+  //     },
+  //     {
+  //       _id: 5,
+  //       complete: false,
+  //       text: "Take a Nap",
+  //       difficulty: 1,
+  //       assignee: "Person B",
+  //     },
+  //   ];
 
-    list.forEach(el => _addItem(el));
-  }, []);
+  //   list.forEach(el => _addItem(el));
+  // }, []);
 
   const _getTodoItems = () => {
     fetch(todoAPI, {
@@ -128,7 +129,7 @@ const ToDo = () => {
 
   return (
     <>
-     <header className="todo-title">
+     <header id="todo-title">
         <h1>
           To Do List Manager ({list.filter((item) => !item.complete).length})
         </h1>
@@ -136,7 +137,7 @@ const ToDo = () => {
 
       <section className="todo">
         <div>
-          <TodoForm handleSubmit={_addItem} />
+          <TodoForm handleSubmit={_addItem}/>
         </div>
 
         <div>

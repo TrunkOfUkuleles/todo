@@ -17,10 +17,10 @@ const List = (props) => {
   
  <Card.Body onClick={() => props.handleComplete(item._id)}>
 
-    <Card.Title>{item.complete ? <Badge  bg="success">Completed</Badge>  : <Badge  as="div" bg='danger'>Pending</Badge> } {item.assignee}</Card.Title>
+    <Card.Title>{item.complete ? <Badge  className=" badge badge-pill badge-success ml-2">Completed</Badge>  : <Badge  className="badge badge-pill badge-danger ml-2">Pending</Badge> } {item.assignee}</Card.Title>
 
     <Card.Text>
-    {item.text}
+    {item.text} <Badge  bg="success">Completed</Badge>
     </Card.Text>
     {/* <Button variant="primary"  >done</Button> */}
   </Card.Body>

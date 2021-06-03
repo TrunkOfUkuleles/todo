@@ -24,12 +24,24 @@ body, html {
 
 }
 
+#todo-title{
+        background-color: gray;
+        color: white;
+        font-size: large;
+        height: 70px;
+        border-radius: 3px;
+        max-width: 95ch;
+        align-content: center;
+    }
+
 .todo {
 
     display:flex;
     flex-direction:row;
     justify-content: flex-start;
     margin: 2em;
+
+    
 
     form {
 
@@ -93,4 +105,8 @@ body, html {
         }
     }
 
+}
+
+.card{
+    margin-bottom: 10px;
 }

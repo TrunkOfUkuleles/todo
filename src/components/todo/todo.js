@@ -81,7 +81,7 @@ const ToDo = () => {
 
       <section className="todo">
         <div>
-          <TodoForm handleSubmit={addItem} />
+          <TodoForm />
         </div>
 
         <div>
@@ -94,3 +94,5 @@ const ToDo = () => {
 
 
 export default ToDo;
+
+// handleSubmit={addItem} 
