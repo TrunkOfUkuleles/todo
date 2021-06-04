@@ -11,6 +11,9 @@ class Header extends React.Component{
                     <li> 
                         <div>Home</div>
                     </li>
+                    <li> 
+                        <div>Settings</div>
+                    </li>
                 </ul>
         </Navbar>
     ) 

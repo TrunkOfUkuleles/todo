@@ -8,13 +8,13 @@ function ListProvider(props){
 
     const state ={
         list,
-        setList
+        changeList: setList 
     }
 
     return(
-        <ListContext value={state}>
+        <ListContext.Provider value={state}>
             {props.children}
-        </ListContext>
+        </ListContext.Provider>
     )
 
 

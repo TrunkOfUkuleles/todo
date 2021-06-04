@@ -1,19 +1,22 @@
-import React from "react";
+import React, {useContext} from "react";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Badge from 'react-bootstrap/Badge';
-
+import {ListContext} from '../../context/listcon.js'
 import './todo.scss';
 
 
 const List = (props) => {
+
+  const listContext = useContext(ListContext)
   return (
+
     <>
-      {props.list.map((item) => (
+    {console.log("Will THE LIST SHOW", props)}
+      {props.loading
+      ?<></>
+      : listContext.list.map((item) => (
         <Card className={`complete-${item.complete}`} key={item._id}>
-          {/* <Card.Header > 
-            
-          </Card.Header> */}
   
  <Card.Body onClick={() => props.handleComplete(item._id)}>
 

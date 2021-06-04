@@ -1,11 +1,11 @@
   
 import React from 'react';
 
-import ToDo from './components/todo/todo.js';
+// import ToDo from './components/todo/todo.js';
 import ToDoC from './components/todo/todo-connected.js';
 import Header from './components/todo/header.js';
-import HeavenlyContext from './context/appcon.js';
-import ListContext from './context/listcon.js';
+import AppProvider from './context/appcon.js';
+import ListProvider from './context/listcon.js';
 
 function App() {  
 
@@ -13,12 +13,14 @@ function App() {
 
   return (
       <>
-      <HeavenlyContext>
-        <ListContext>
+      <AppProvider>
+        <ListProvider>
+          <>
           <Header />
           <ToDoC />
-        </ListContext>
-      </HeavenlyContext>
+          </>
+        </ListProvider>
+      </AppProvider>
 
       </>
     );

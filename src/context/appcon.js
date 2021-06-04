@@ -6,7 +6,7 @@ export const HeavenlyContext = React.createContext();
 function AppProvider(props){
     const [displayed, setDisplayed] = useState(3);
     const [sorting, setSorting] = useState('norm');
-    const [hide, setHide] = useState(false);
+    const [hide, setHide] = useState(true);
 
     const state = {
         displayed, 
@@ -19,7 +19,7 @@ function AppProvider(props){
 
     return (
         <HeavenlyContext.Provider value={state}>
-            <props.children />
+            {props.children}
         </HeavenlyContext.Provider>
     )
 
