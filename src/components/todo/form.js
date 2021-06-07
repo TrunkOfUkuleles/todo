@@ -6,15 +6,27 @@ import {ListContext} from '../../context/listcon.js'
 
 const Former = (props) => {
 
-const [handleChange, handleSubmit] = useForm(props.handleComplete)
+const [handleChange, handleSubmit] = useForm(props.handleSub)
 
 // const listContext = useContext(ListContext)
 
 
-  // function setting(){                                 
-  //   handleSubmit()
-  // }
+// const toggler = async(id, call) => {
 
+//   let flipper = val.filter((el) => el._id ===id)[0] ||{}
+
+//   if (flipper._id){
+//     flipper.complete = !flipper.complete;
+//     await axios.put(`${url}/${id}`, flipper)
+//       .then(res => {
+//         const todos = res.data.results
+//         console.log("toggled: ", todos)
+//         call(todos)
+//       }).catch(e => console.log(e))
+
+//   }
+//     console.log("TOGGLED: ", flipper)
+// }
   return (
 
  <>
@@ -27,19 +39,19 @@ const [handleChange, handleSubmit] = useForm(props.handleComplete)
               type="text"
               name="text"
               placeholder="Item Details"
-              onChange={e=> handleChange(e)}
+              onChange={handleChange}
             />
           </Form.Group>
           <Form.Group controlId="email">
             <Form.Label>Assigned To</Form.Label>
-            <Form.Control type="text" name="assignee" placeholder="Assignee Name" onChange={(e)=> handleChange(e)} />
+            <Form.Control type="text" name="assignee" placeholder="Assignee Name" onChange={handleChange} />
           </Form.Group>
           <Form.Group controlId="difficulty">
             <Form.Label>Difficulty Rating</Form.Label>
-            <Form.Control defaultValue="1" type="range" min="1" max="5" name="difficulty" onChange={(e)=> handleChange(e)} />
+            <Form.Control defaultValue="1" type="range" min="1" max="5" name="difficulty" onChange={handleChange} />
           </Form.Group>
         </Form>
-        <Button variant="primary" type="submit" onClick={(e) => handleSubmit(e)}>Add Item</Button>
+        <Button variant="primary" onClick={handleSubmit}>Add Item</Button>
       </>
 
 

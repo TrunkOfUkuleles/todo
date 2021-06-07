@@ -13,8 +13,8 @@ import PageMe from '../pagination.js'
 function ToDo() {
   const appCon = useContext(HeavenlyContext)
   const listContext = useContext(ListContext)
-  const [adding, loader, isLoading, toggler, deleter] = useAjax(listContext.list)
-  const [working, setWorking] = useState([{}])
+  const [loader, adding, toggler, deleter, isLoading] = useAjax(listContext.list)
+  const [working, setWorking] = useState([])
   const [active, setActive] = useState(1)
   const [pageSet, setPageSet] = useState([])
 
@@ -25,32 +25,35 @@ console.log("effect used:", listContext.list)
 
  useEffect(() => {
   filter(listContext.list);
-  console.log("FILTER EFFECT: ", listContext.list, )
- }, [listContext.list])
+  console.log("FILTER EFFECT: ", listContext.list )
+ }, [isLoading])
 
   function filter(arr){
     
     let theWorks = arr.sort((a,b) => b[appCon.sortype] - a[appCon.sortype])
-    if(appCon.hide){return setWorking(theWorks.filter(el => !el.complete))}
     setWorking(theWorks)
+    if(appCon.hide){setWorking(theWorks.filter(el => !el.complete))}
     console.log('filtering: ', working, theWorks)
+    console.log("ON LOAD/filter: ", working.length, appCon.displayed)
+
   }
 
   useEffect(()=>{
     setPageSet(working.slice(((active-1)*appCon.displayed), (((active-1)*appCon.displayed)+appCon.displayed)))
-  }, [active, working])
+    console.log("PAGE SET EFFECT: ", appCon.displayed, active, pageSet)
+  }, [active, appCon.displayed])
 
   const _delete = async(id) =>{
-    await deleter(id, (res) => {listContext.changeList(res)})
+    await deleter(id, listContext.changeList)
   }
 
   const _add = async(el) => {
     console.log("ADD: ", el)
-    await adding(el, (res)=> {listContext.changeList(arr => [...arr, res])})
+    await adding(el, listContext.changeList)
   }
 
   const _tog = async(id) =>{
-    await toggler(id, (res) => {listContext.changeList(res)})
+    await toggler(id, listContext.changeList)
   }
 
 
@@ -65,7 +68,7 @@ console.log("effect used:", listContext.list)
 
       <section className="todo">
         <div>
-          <TodoForm handleSubmit={_add}/>
+          <TodoForm handleSub={_add}/>
         </div>
 
         <div>

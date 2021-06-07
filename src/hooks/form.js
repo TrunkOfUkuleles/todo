@@ -3,30 +3,29 @@ import { useState, useContext } from 'react';
 // import useAjax from './useAjax.js';
 
 // our custom hook has the "use" convention attached -> you MUST stick to this
-const useForm = (action) => {
+const useForm = (call) => {
 
   // setup some ability to collect values from our form as it's being updated / submitted
   const [values, setValues] = useState({});
-  // const [adding] = useAjax(values)
-  // const listContext = useContext(ListContext)
+
+  const handleChange = (e) => {
+    e.persist();
+    setValues(val => ({...val, [e.target.name]: e.target.value }));
+    console.log("CHANGING VALUES", values)
+  }
+
   const handleSubmit = (e) => {
     if (e){
       e.preventDefault();
-      // e.target.reset();
+      e.target.reset();
     }
-    console.log("HANDLESUBMIT: ", e, action, values)
-    action(values);
+    call(values)
+    console.log("HANDLESUBMIT: ", call, values)
+
   }
-
-  const handleChange = (e) => {
-    // e.persist();
-    setValues(values => ({...values, [e.target.name]: e.target.value }));
-  }
-
-
   return [
-    handleSubmit,
     handleChange,
+    handleSubmit,
     values
   ]
 }

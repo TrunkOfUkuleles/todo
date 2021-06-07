@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 // import {ListContext} from '../context/listcon.js'
 import axios from 'axios';
-import { NavItem } from 'react-bootstrap';
+// import { NavItem } from 'react-bootstrap';
 
 
 const useAjax = (val) => {
@@ -13,7 +13,7 @@ const useAjax = (val) => {
 
   const loader = async (call) =>{
     setIsLoading(true)
-    call([]);
+    // call([]);
     let wait;
     await axios.get(url)
         .then(res=>{
@@ -23,6 +23,7 @@ const useAjax = (val) => {
             wait = todos
         })
         wait.map((el) => {
+          console.log("LOAD INJECTION: ", el)
           call(arr => [...arr, el])
           })
   }
@@ -35,8 +36,8 @@ const useAjax = (val) => {
      await axios.post(url, chore)
         .then(res=>{
             const todos = res.data.results
-            console.log("IN ADDING   : ", todos)
-            call(todos)
+            console.log("IN ADDING   : ", res)
+            call(arr => [...arr, chore])
         }).catch(e => console.log(e))
   }
 
@@ -70,6 +71,6 @@ const useAjax = (val) => {
   }
 
 
-return [adding, loader, toggler, deleter, isLoading, setIsLoading ]
+return [loader, adding, toggler, deleter, isLoading, setIsLoading ]
 }
 export default useAjax;
