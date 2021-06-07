@@ -26,11 +26,11 @@ console.log("effect used:", listContext.list)
  useEffect(() => {
   filter(listContext.list);
   console.log("FILTER EFFECT: ", listContext.list )
- }, [listContext.list])
+ }, [])
 
   function filter(arr){
-    
-    let theWorks = arr.sort((a,b) => b[appCon.sortype] - a[appCon.sortype])
+    console.log("BEGIN FILTERING: ", arr)
+    let theWorks = arr.sort((a,b) =>{ b[appCon.sortype] - a[appCon.sortype]})
     setWorking(theWorks)
     if(appCon.hide){setWorking(theWorks.filter(el => !el.complete))}
     console.log('filtering: ', working, theWorks)
@@ -54,14 +54,15 @@ console.log("effect used:", listContext.list)
     await adding(el, listContext.changeList)
   }
 
-  const _tog = async(id) =>{
+  const _tog = async( id) =>{
+   
     await toggler(id, listContext.changeList)
   }
 
-  const _setter = (e, num) =>{
-    if(e){e.preventDefault();}
-    setActive(num)
-  }
+  // const _setter = (e, num) =>{
+  //   if(e){e.preventDefault();}
+  //   setActive(num)
+  // }
 
 
 

@@ -15,7 +15,7 @@ const List = (props) => {
       {props.list.map((item) => (
         <Card className={`complete-${item.complete}`} key={item._id}>
   
- <Card.Body onClick={() => props.handleComplete(item._id)}>
+ <Card.Body onClick={props.handleComplete(item._id)}>
 
     <Card.Title>{item.complete 
     ? <Badge  className=" badge badge-pill badge-success ml-2">Completed</Badge>  

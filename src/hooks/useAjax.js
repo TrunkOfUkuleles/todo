@@ -35,9 +35,9 @@ const useAjax = (val) => {
     console.log("ADDING AJAX: ", chore)
      await axios.post(url, chore)
         .then(res=>{
-            const todos = res.data.results
+            const todos = res.data
             console.log("IN ADDING   : ", res)
-            call(arr => [...arr, chore])
+            call(arr => [...arr, todos])
         }).catch(e => console.log(e))
   }
 
@@ -51,7 +51,7 @@ const useAjax = (val) => {
           .then(res => {
             const todos = res.data.results
             console.log("toggled: ", todos)
-            call(todos)
+            call(arr => arr.filter(el => el_id===el._id ? flipper : el))
           }).catch(e => console.log(e))
 
       }
@@ -64,8 +64,8 @@ const useAjax = (val) => {
         .then(res =>{
             const todos = res.data
             console.log("DELETED", todos)
-            call(todos)
-        }).catch(e => console.log)
+            call(arr => arr.filter(el => el._id!==res._id ))
+        }).catch(e => console.log(e))
 
         console.log("DELETED")
   }
