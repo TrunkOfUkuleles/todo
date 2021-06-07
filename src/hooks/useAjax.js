@@ -1,43 +1,73 @@
 import React, { useState, useContext } from 'react'
 // import {ListContext} from '../context/listcon.js'
 import axios from 'axios';
+import { NavItem } from 'react-bootstrap';
 
 
-const useAjax = (call) => {
+const useAjax = (val) => {
   const url = 'https://api-js401.herokuapp.com/api/v1/todo';
-
-  const [isLoading, setIsLoading] = useState(false)
+// const uri = process.env.REACT_APP_MONGO
+  const [isLoading, setIsLoading] = useState(true)
 //   const listContext = useContext(ListContext)
 
 
-  const loader = async (callback) =>{
+  const loader = async (call) =>{
     setIsLoading(true)
-    axios.get(url)
+    call([]);
+    let wait;
+    await axios.get(url)
         .then(res=>{
             const todos = res.data.results
             console.log("IN LOADING   : ", todos)
-            todos.map((td) => {
-                console.log("LOADING FOREACH", td)
-                callback(td)})
-            // console.log("IN LOADER : ", listContext)
             setIsLoading(false)
+            wait = todos
         })
+        wait.map((el) => {
+          call(arr => [...arr, el])
+          })
   }
 
-  const adding = async (e, target) =>{
-      console.log("adding ajax :", target)
-    if (e) e.preventDefault();
+  const adding = async (chore, call) =>{
     setIsLoading(true)
-     axios.post(url, {target})
+    chore.due= new Date()
+    chore.complete = false
+     await axios.post(url, chorse)
         .then(res=>{
             const todos = res.data.results
             console.log("IN ADDING   : ", todos)
-            callback(todos)
-            setIsLoading(false)
-        })
+            call(todos)
+        }).catch(e => console.log(e))
+  }
+
+  const toggler = async(id, call) => {
+
+      let flipper = val.filter((el) => el._id ===id)[0] ||{}
+
+      if (flipper._id){
+        flipper.complete = !flipper.complete;
+        await axios.put(`${url}/${id}`, flipper)
+          .then(res => {
+            const todos = res.data.results
+            console.log("toggled: ", todos)
+            call(todos)
+          }).catch(e => console.log(e))
+
+      }
+        console.log("TOGGLED: ", flipper)
+  }
+
+  const deleter = async(id, call) => {
+      await axios.delete(`${url}/${id}`)
+        .then(res =>{
+            const todos = res.data
+            console.log("DELETED", todos)
+            call(todos)
+        }).catch(e => console.log)
+
+        console.log("DELETED")
   }
 
 
-return [adding, loader, isLoading]
+return [adding, loader, toggler, deleter, isLoading, setIsLoading ]
 }
-export default useAjax
+export default useAjax;

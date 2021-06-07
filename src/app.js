@@ -1,6 +1,6 @@
   
 import React from 'react';
-
+import { BrowserRouter } from 'react-router-dom';
 // import ToDo from './components/todo/todo.js';
 import ToDoC from './components/todo/todo-connected.js';
 import Header from './components/todo/header.js';
@@ -13,6 +13,7 @@ function App() {
 
   return (
       <>
+      <BrowserRouter>
       <AppProvider>
         <ListProvider>
           <>
@@ -21,6 +22,7 @@ function App() {
           </>
         </ListProvider>
       </AppProvider>
+      </BrowserRouter>
 
       </>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-// import {Link } from 'react-router-dom';
+import {Link , NavLink} from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar'
 
 class Header extends React.Component{
@@ -9,10 +9,10 @@ class Header extends React.Component{
         <Navbar bg="primary">
                 <ul>
                     <li> 
-                        <div>Home</div>
+                        <Link to="/">Home</Link>
                     </li>
-                    <li> 
-                        <div>Settings</div>
+                    <li>
+                        <NavLink to="/settings">Settings</NavLink>
                     </li>
                 </ul>
         </Navbar>

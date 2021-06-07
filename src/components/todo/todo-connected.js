@@ -1,99 +1,57 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import TodoForm from './form.js';
 import TodoList from './list.js';
 import './todo.scss';
-// import HeavenlyContext from '../../context/appcon.js'
+import {HeavenlyContext} from '../../context/appcon.js'
 import {ListContext} from '../../context/listcon.js'
 import useAjax from '../../hooks/useAjax.js'
-const todoAPI = 'https://api-js401.herokuapp.com/api/v1/todo';
+import PageMe from '../pagination.js'
+// const todoAPI = 'https://api-js401.herokuapp.com/api/v1/todo';
 // const todoAPI = 'http://localhost:3000/todo'
 
 
 function ToDo() {
-
-  // const [list, setList] = useState([]);
-  // const appContext = useContext(HeavenlyContext)
+  const appCon = useContext(HeavenlyContext)
   const listContext = useContext(ListContext)
-  const [adding, loader, isLoading] = useAjax()
-
-  function setter(el){
-    listContext.changeList((list) => [...list, el])
-    console.log("Setter ", listContext.list)
-  }
-
-  // const _addItem = (item) => { 
-  //   item.due = new Date();
-  //   fetch(todoAPI, {
-  //     method: 'post',
-  //     mode: 'cors',
-  //     cache: 'no-cache',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify(item)
-  //   })
-  //     .then(response => response.json())
-  //     .then(savedItem => {
-  //       setList([...list, savedItem])
-  //     })
-  //     .catch(console.error);
-  // };
-
-  const _toggleComplete = id => {
-
-    let item = list.filter(i => i._id === id)[0] || {};
-
-    if (item._id) {
-
-      item.complete = !item.complete;
-
-      let url = `${todoAPI}/${id}`;
-
-      fetch(url, {
-        method: 'put',
-        mode: 'cors',
-        cache: 'no-cache',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(item)
-      })
-        .then(response => response.json())
-        .then(savedItem => {
-          setList(list.map(listItem => listItem._id === item._id ? savedItem : listItem));
-        })
-        .catch(console.error);
-    }
-  };
-
-  const _deleteTodo = id => {
-
-    let url = `${todoAPI}/${id}`;
-    fetch(url, {
-      method: 'delete',
-      mode: 'cors',
-      cache: 'no-cache',
-      headers: { 'Content-Type': 'application/json' }
-    })
-      .then(response => response.json())
-      .then(savedItem => {
-        setList(list.filter(listItem => listItem._id !== id ));
-        console.log("deleted")
-      })
-      .catch(console.error);
-  }
+  const [adding, loader, isLoading, toggler, deleter] = useAjax(listContext.list)
+  const [working, setWorking] = useState([{}])
+  const [active, setActive] = useState(1)
+  const [pageSet, setPageSet] = useState([])
 
   useEffect(() => {
-    loader(setter)
-  }, []);
+    loader(listContext.changeList)
+console.log("effect used:", listContext.list)
+ }, [])
 
-  const _getTodoItems = () => {
-    fetch(todoAPI, {
-      method: 'get',
-      mode: 'cors',
-    })
-      .then(data => data.json())
-      .then(data => setList(data.results))
-      .catch(console.error);
-  };
+ useEffect(() => {
+  filter(listContext.list);
+  console.log("FILTER EFFECT: ", listContext.list, )
+ }, [listContext.list])
 
-  useEffect(_getTodoItems, []);
+  function filter(arr){
+    
+    let theWorks = arr.sort((a,b) => b[appCon.sortype] - a[appCon.sortype])
+    if(appCon.hide){return setWorking(theWorks.filter(el => !el.complete))}
+    setWorking(theWorks)
+    console.log('filtering: ', working, theWorks)
+  }
+
+  useEffect(()=>{
+    setPageSet(working.slice(((active-1)*appCon.displayed), (((active-1)*appCon.displayed)+appCon.displayed)))
+  }, [active, working])
+
+  const _delete = async(id) =>{
+    await deleter(id, (res) => {listContext.changeList(res)})
+  }
+
+  const _add = async(el) => {
+    console.log("ADD: ", el)
+    await adding(el, (res)=> {listContext.changeList(arr => [...arr, res])})
+  }
+
+  const _tog = async(id) =>{
+    await toggler(id, listContext.changeList(res))
+  }
 
 
 
@@ -101,17 +59,18 @@ function ToDo() {
     <>
      <header id="todo-title">
         <h1>
-          To Do List Manager ({listContext.list.length})
+          To Do List Manager ({working.length})
         </h1>
       </header>
 
       <section className="todo">
         <div>
-          <TodoForm handleSubmit={adding}/>
+          <TodoForm handleSubmit={_add}/>
         </div>
 
         <div>
-          <TodoList list={listContext.list} loading={isLoading} handleDelete={_deleteTodo} handleComplete={_toggleComplete} />
+          <TodoList list={pageSet} loading={isLoading} handleDelete={_delete} handleComplete={_tog} />
+          <PageMe working = {working} displayed={appCon.displayed} acti={active} setActi={setActive} testy={Math.ceil(working.length/appCon.displayed)} />
         </div>
       </section>
     </>

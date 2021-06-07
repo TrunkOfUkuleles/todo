@@ -1,27 +1,25 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 
 export const HeavenlyContext = React.createContext();
 
-function AppProvider(props){
-    const [displayed, setDisplayed] = useState(3);
-    const [sorting, setSorting] = useState('norm');
-    const [hide, setHide] = useState(true);
-
-    const state = {
-        displayed, 
-        sorting,
-        hide,
-        displayNum: setDisplayed,
-        sortType: setSorting,
-        hider: setHide
+class AppProvider extends React.Component{
+constructor(props){
+    super(props);
+    this.state = {
+        displayed: 3,
+        hide: false,
+        sortype: 'due'
     }
+}
+    render() {
 
-    return (
-        <HeavenlyContext.Provider value={state}>
-            {props.children}
-        </HeavenlyContext.Provider>
-    )
+        return (
+            <HeavenlyContext.Provider value={this.state}>
+                {this.props.children}
+            </HeavenlyContext.Provider>
+        )
+    }
 
 
 }
