@@ -26,24 +26,29 @@ console.log("effect used:", listContext.list)
  useEffect(() => {
   filter(listContext.list);
   console.log("FILTER EFFECT: ", listContext.list )
- }, [])
+ }, [ listContext.list])
 
   function filter(arr){
     console.log("BEGIN FILTERING: ", arr)
-    let theWorks = arr.sort((a,b) =>{ b[appCon.sortype] - a[appCon.sortype]})
+    let rest = arr.slice(0)
+    let theWorks = rest.sort((a,b) =>{ b[appCon.sortype] - a[appCon.sortype]})
+    
     setWorking(theWorks)
-    if(appCon.hide){setWorking(theWorks.filter(el => !el.complete))}
+    if(appCon.hide){
+      theWorks = theWorks.slice(0).filter(el => !el.complete)
+    consoile.log("APPCON hidden")}
     console.log('filtering: ', working, theWorks)
     // console.log("ON LOAD/filter: ", working.length, appCon.displayed)
-    setPageSet(working.slice(0, 3))
+    setPageSet(working.slice(((active-1)*appCon.displayed), (((active-1)*appCon.displayed)+appCon.displayed)))
 
   }
 
-  useEffect(()=>{
-    setPageSet(working.slice(((active-1)*appCon.displayed), (((active-1)*appCon.displayed)+appCon.displayed)))
-    console.log("PAGE SET EFFECT: ", appCon.displayed, active, pageSet)
-    console.log("ON LOAD/filter: ", working.length, appCon.displayed)
-  }, [active, appCon.displayed])
+  // useEffect(()=>{
+
+  //   setPageSet(working.slice(((active-1)*appCon.displayed), (((active-1)*appCon.displayed)+appCon.displayed)))
+  //   console.log("PAGE SET EFFECT: ", appCon.displayed, active, pageSet)
+  //   console.log("ON LOAD/filter: ", working.length, appCon.displayed, pageSet)
+  // }, [working])
 
   const _delete = async(id) =>{
     await deleter(id, listContext.changeList)
@@ -54,9 +59,9 @@ console.log("effect used:", listContext.list)
     await adding(el, listContext.changeList)
   }
 
-  const _tog = async( id) =>{
-   
-    await toggler(id, listContext.changeList)
+  const _tog = (e, id) => {
+    if (e){e.preventDefault()}
+     toggler(id, listContext.changeList)
   }
 
   // const _setter = (e, num) =>{

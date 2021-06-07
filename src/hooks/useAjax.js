@@ -38,12 +38,15 @@ const useAjax = (val) => {
             const todos = res.data
             console.log("IN ADDING   : ", res)
             call(arr => [...arr, todos])
-        }).catch(e => console.log(e))
+          }).catch(e => console.log(e))
+          
+          setIsLoading(false)
+        console.log("AFTER ADD: ", val)
   }
 
   const toggler = async(id, call) => {
-
-      let flipper = val.filter((el) => el._id ===id)[0] ||{}
+    // setIsLoading(true)
+      let flipper = val.filter((el) => el._id ===id)[0] || {}
 
       if (flipper._id){
         flipper.complete = !flipper.complete;
@@ -51,14 +54,16 @@ const useAjax = (val) => {
           .then(res => {
             const todos = res.data.results
             console.log("toggled: ", todos)
-            call(arr => arr.filter(el => el_id===el._id ? flipper : el))
+            call(arr => arr.filter(el => id===el._id ? flipper : el))
           }).catch(e => console.log(e))
 
       }
+      // setIsLoading(false)
         console.log("TOGGLED: ", flipper)
   }
 
   const deleter = async(id, call) => {
+    // setIsLoading(true)
     console.log("DELETER: ", id, call)
       await axios.delete(`${url}/${id}`)
         .then(res =>{
@@ -66,7 +71,7 @@ const useAjax = (val) => {
             console.log("DELETED", todos)
             call(arr => arr.filter(el => el._id!==res._id ))
         }).catch(e => console.log(e))
-
+        // setIsLoading(false)
         console.log("DELETED")
   }
 

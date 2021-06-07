@@ -26,13 +26,13 @@ const PageMe = (props) => {
 
     return(
             <Pagination>
-              <Pagination.Item key={1} active={1 === props.acti} onClick={e => props.setActi(e, 1)}>
+              <Pagination.Item key={1} active={1 === props.acti} onClick={e => props.setActi(1)}>
                 {1}
               </Pagination.Item>
-              <Pagination.Item key={2} active={2 === props.acti} onClick={e => props.setActi(e, 2)}>
+              <Pagination.Item key={2} active={2 === props.acti} onClick={e => props.setActi(2)}>
                 {2}
               </Pagination.Item>
-              <Pagination.Item key={3} active={3 === props.acti} onClick={e => props.setActi(e, 3)}>
+              <Pagination.Item key={3} active={3 === props.acti} onClick={e => props.setActi(3)}>
                 {3}
               </Pagination.Item>
           
