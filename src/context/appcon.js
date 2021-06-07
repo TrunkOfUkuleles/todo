@@ -9,7 +9,7 @@ constructor(props){
     this.state = {
         displayed: 3,
         hide: false,
-        sortype: 'due'
+        sortype: 'difficulty'
     }
 }
     render() {

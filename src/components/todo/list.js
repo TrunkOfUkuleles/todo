@@ -18,14 +18,16 @@ const List = (props) => {
  <Card.Body onClick={() => props.handleComplete(item._id)}>
 
     <Card.Title>{item.complete 
-    ? <Badge  className=" badge badge-pill badge-success ml-2">Completed</Badge>  : <Badge  className="badge badge-pill badge-danger ml-2">Pending</Badge> } {item.assignee}</Card.Title>
+    ? <Badge  className=" badge badge-pill badge-success ml-2">Completed</Badge>  
+    : <Badge  className="badge badge-pill badge-danger ml-2">Pending</Badge> } 
+    {item.assignee}</Card.Title>
 
     <Card.Text>
     {item.text} 
     </Card.Text>
   </Card.Body>
-  <Button style={{"text-align": "right", "min-width":"33%"}} onClick={() => props.handleDelete(item._id)}>Done</Button>
-  <Card.Footer className="text-muted" style={{"text-align": "right"  }}>Difficulty: {item.difficulty}</Card.Footer>
+  <Button style={{"textAlign": "right", "minWidth":"33%"}} onClick={() => props.handleDelete(item._id)}>Done</Button>
+  <Card.Footer className="text-muted" style={{"textAlign": "right"  }}>Difficulty: {item.difficulty}</Card.Footer>
 </Card>
       ))}
           </>

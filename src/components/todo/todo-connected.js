@@ -26,7 +26,7 @@ console.log("effect used:", listContext.list)
  useEffect(() => {
   filter(listContext.list);
   console.log("FILTER EFFECT: ", listContext.list )
- }, [isLoading])
+ }, [listContext.list])
 
   function filter(arr){
     
@@ -34,13 +34,15 @@ console.log("effect used:", listContext.list)
     setWorking(theWorks)
     if(appCon.hide){setWorking(theWorks.filter(el => !el.complete))}
     console.log('filtering: ', working, theWorks)
-    console.log("ON LOAD/filter: ", working.length, appCon.displayed)
+    // console.log("ON LOAD/filter: ", working.length, appCon.displayed)
+    setPageSet(working.slice(0, 3))
 
   }
 
   useEffect(()=>{
     setPageSet(working.slice(((active-1)*appCon.displayed), (((active-1)*appCon.displayed)+appCon.displayed)))
     console.log("PAGE SET EFFECT: ", appCon.displayed, active, pageSet)
+    console.log("ON LOAD/filter: ", working.length, appCon.displayed)
   }, [active, appCon.displayed])
 
   const _delete = async(id) =>{
@@ -54,6 +56,11 @@ console.log("effect used:", listContext.list)
 
   const _tog = async(id) =>{
     await toggler(id, listContext.changeList)
+  }
+
+  const _setter = (e, num) =>{
+    if(e){e.preventDefault();}
+    setActive(num)
   }
 
 

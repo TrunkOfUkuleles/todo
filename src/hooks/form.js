@@ -17,7 +17,7 @@ const useForm = (call) => {
   const handleSubmit = (e) => {
     if (e){
       e.preventDefault();
-      e.target.reset();
+      
     }
     call(values)
     console.log("HANDLESUBMIT: ", call, values)
