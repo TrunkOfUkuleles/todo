@@ -31,7 +31,8 @@ const useAjax = (val) => {
     setIsLoading(true)
     chore.due= new Date()
     chore.complete = false
-     await axios.post(url, chorse)
+    console.log("ADDING AJAX: ", chore)
+     await axios.post(url, chore)
         .then(res=>{
             const todos = res.data.results
             console.log("IN ADDING   : ", todos)
@@ -57,6 +58,7 @@ const useAjax = (val) => {
   }
 
   const deleter = async(id, call) => {
+    console.log("DELETER: ", id, call)
       await axios.delete(`${url}/${id}`)
         .then(res =>{
             const todos = res.data

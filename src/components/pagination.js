@@ -11,7 +11,7 @@ const PageMe = (props) => {
 
         for (let i = 1; i<=props.testy; i++){
             items.push(
-                <Pagination.Item key={i} active={i === props.acti} onClick={props.setActi(i)}>
+                <Pagination.Item key={i} active={i === props.acti} onClick={props.setActi({i})}>
                   {i}
                 </Pagination.Item>,
               );

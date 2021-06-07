@@ -35,12 +35,11 @@ const [handleChange, handleSubmit] = useForm(props.handleComplete)
             <Form.Control type="text" name="assignee" placeholder="Assignee Name" onChange={(e)=> handleChange(e)} />
           </Form.Group>
           <Form.Group controlId="difficulty">
-            <Form.Label for="difficulty">Difficulty Rating</Form.Label>
-            {/* <Form.Range /> */}
+            <Form.Label>Difficulty Rating</Form.Label>
             <Form.Control defaultValue="1" type="range" min="1" max="5" name="difficulty" onChange={(e)=> handleChange(e)} />
           </Form.Group>
-          <Button variant="primary" type="submit" onClick={e => handleSubmit(e)}>Add Item</Button>
         </Form>
+        <Button variant="primary" type="submit" onClick={(e) => handleSubmit(e)}>Add Item</Button>
       </>
 
 

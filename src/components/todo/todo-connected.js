@@ -50,7 +50,7 @@ console.log("effect used:", listContext.list)
   }
 
   const _tog = async(id) =>{
-    await toggler(id, listContext.changeList(res))
+    await toggler(id, (res) => {listContext.changeList(res)})
   }
 
 
