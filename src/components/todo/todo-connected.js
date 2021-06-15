@@ -31,8 +31,8 @@ console.log("effect used:", listContext.list)
   function filter(arr){
     console.log("BEGIN FILTERING: ", arr)
     let rest = arr.slice(0)
-    let theWorks = rest.sort((a,b) =>{ b[appCon.sortype] - a[appCon.sortype]})
-    
+    let theWorks = rest.sort((a,b) =>{ return b[appCon.sortype] - a[appCon.sortype]})
+
     setWorking(theWorks)
     if(appCon.hide){
       theWorks = theWorks.slice(0).filter(el => !el.complete)
